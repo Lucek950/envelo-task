@@ -10,5 +10,5 @@ import java.util.List;
 public interface RateMapper {
     RateDto rateToRateDto(Rate rate);
     Rate rateDtoToRate(RateDto rateDto);
-    List<Rate> ratesDtoToRates(List<RateDto> ratesDto);
+    List<RateDto> ratesToRatesDto(List<Rate> rates);
 }
