@@ -12,12 +12,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class ResultService {
+    private final LogService logService;
     private final RateService rateService;
 
-    public ResultDto convertCurrency(String formCode, String toCode, BigDecimal amount){
-        RateDto from = rateService.getRate(formCode);
+    public ResultDto convertCurrency(String fromCode, String toCode, BigDecimal amount){
+        logService.setLog("convertCurrency(String fromCode, String toCode, BigDecimal amount)",
+                        fromCode, toCode, amount);
+        RateDto from = rateService.getRate(fromCode);
         RateDto to = rateService.getRate(toCode);
 
         BigDecimal valueTo = to.getMid();
@@ -31,8 +33,9 @@ public class ResultService {
                 .build();
     }
 
-    public List<ResultDto> convertCurrencies(String formCode){
+    public List<ResultDto> convertCurrencies(String fromCode){
+        logService.setLog("convertCurrencies(String fromCode)", fromCode);
         List<RateDto> allRates = rateService.getAllRates();
-        return allRates.stream().map(rate -> convertCurrency(formCode, rate.getCode(), BigDecimal.ONE)).toList();
+        return allRates.stream().map(rate -> convertCurrency(fromCode, rate.getCode(), BigDecimal.ONE)).toList();
     }
 }

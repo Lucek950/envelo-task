@@ -2,6 +2,7 @@ package michal.ulik.recruitmenttask.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import michal.ulik.recruitmenttask.model.LogRepository;
 import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
 import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
 import org.springframework.stereotype.Service;
@@ -9,10 +10,11 @@ import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class NbpService {
+    private final LogService logService;
 
     public NbpTableDto getNbpTableDtoTemplate(){
+        logService.setLog("getNbpTableDtoTemplate()");
         String url = "http://api.nbp.pl/api/exchangerates/tables/A/";
         NbpTableDto[] nbpTableDto = new RestTemplate().getForObject(url, NbpTableDto[].class);
         assert nbpTableDto != null;
@@ -20,6 +22,7 @@ public class NbpService {
     }
 
     public NbpRateDto getRateDtoTemplate(String code){
+        logService.setLog("getRateDtoTemplate(String code)", code);
         String url = "http://api.nbp.pl/api/exchangerates/rates/a/" + code;
         return new RestTemplate().getForObject(url, NbpRateDto.class);
     }

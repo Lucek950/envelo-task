@@ -10,15 +10,17 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class RateService {
+    private final LogService logService;
     private final NbpService nbpService;
 
     public List<RateDto> getAllRates(){
+        logService.setLog("getAllRates()");
         return nbpService.getNbpTableDtoTemplate().getRates();
     }
 
     public RateDto getRate(String code){
+        logService.setLog("getRate(String code)", code);
         NbpRateDto nbpRateDto = nbpService.getRateDtoTemplate(code);
         return RateDto.builder()
                 .currency(nbpRateDto.getCurrency())
