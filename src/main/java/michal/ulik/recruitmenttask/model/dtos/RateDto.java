@@ -2,6 +2,8 @@ package michal.ulik.recruitmenttask.model.dtos;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -11,5 +13,5 @@ public class RateDto {
     private Long id;
     private String currency;
     private String code;
-    private double mid;
+    private BigDecimal mid;
 }

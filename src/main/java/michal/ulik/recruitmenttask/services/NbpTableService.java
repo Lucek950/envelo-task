@@ -1,6 +1,7 @@
 package michal.ulik.recruitmenttask.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
 import michal.ulik.recruitmenttask.model.enities.NbpTable;
 import michal.ulik.recruitmenttask.model.mappers.NbpTableMapper;
@@ -10,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class NbpTableService {
     private final NbpTableRepository nbpTableRepository;
     private final NbpTableMapper nbpTableMapper;
