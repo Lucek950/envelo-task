@@ -7,7 +7,6 @@ import michal.ulik.recruitmenttask.model.dtos.ResultDto;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
 
@@ -17,9 +16,9 @@ import java.util.List;
 public class ResultService {
     private final RateService rateService;
 
-    public ResultDto convertCurrency(long fromRateId, long toRateId, BigDecimal amount){
-        RateDto from = rateService.getRate(fromRateId);
-        RateDto to = rateService.getRate(toRateId);
+    public ResultDto convertCurrency(String formCode, String toCode, BigDecimal amount){
+        RateDto from = rateService.getRate(formCode);
+        RateDto to = rateService.getRate(toCode);
 
         BigDecimal valueTo = to.getMid();
         BigDecimal valueFrom = from.getMid();
@@ -32,8 +31,8 @@ public class ResultService {
                 .build();
     }
 
-    public List<ResultDto> convertCurrencies(long fromRateId){
+    public List<ResultDto> convertCurrencies(String formCode){
         List<RateDto> allRates = rateService.getAllRates();
-        return allRates.stream().map(rate -> convertCurrency(fromRateId, rate.getId(), BigDecimal.ONE)).toList();
+        return allRates.stream().map(rate -> convertCurrency(formCode, rate.getCode(), BigDecimal.ONE)).toList();
     }
 }

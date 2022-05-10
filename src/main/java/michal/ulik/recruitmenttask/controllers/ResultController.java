@@ -17,15 +17,15 @@ import java.util.List;
 public class ResultController {
     private final ResultService resultService;
 
-    @GetMapping("/{idFrom}/to/{idTo}/{amount}")
-    public ResultDto getConvertCurrency(@PathVariable("idFrom") long idFrom
-            ,@PathVariable("idTo") long idTo
+    @GetMapping("/{codeFrom}/to/{codeTo}/{amount}")
+    public ResultDto getConvertCurrency(@PathVariable("codeFrom") String codeFrom
+            ,@PathVariable("codeTo") String codeTo
             ,@PathVariable("amount") BigDecimal amount){
-        return resultService.convertCurrency(idFrom, idTo, amount);
+        return resultService.convertCurrency(codeFrom, codeTo, amount);
     }
 
-    @GetMapping("/{idFrom}/to-all")
-    public List<ResultDto> getConvertCurrencies(@PathVariable("idFrom") long idFrom){
-        return resultService.convertCurrencies(idFrom);
+    @GetMapping("/{codeFrom}/to-all")
+    public List<ResultDto> getConvertCurrencies(@PathVariable("codeFrom") String codeFrom){
+        return resultService.convertCurrencies(codeFrom);
     }
 }

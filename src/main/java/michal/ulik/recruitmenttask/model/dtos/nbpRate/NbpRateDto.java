@@ -1,17 +1,16 @@
-package michal.ulik.recruitmenttask.model.dtos;
+package michal.ulik.recruitmenttask.model.dtos.nbpRate;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import michal.ulik.recruitmenttask.model.dtos.CurrencyDto;
-import michal.ulik.recruitmenttask.model.dtos.RateDto;
 
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Getter
 @Setter
-public class NbpTableDto{
-    private List<RateDto> rates;
+public class NbpRateDto extends CurrencyDto {
+    private List<ValueNbpRateDto> rates;
 }

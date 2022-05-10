@@ -2,12 +2,8 @@ package michal.ulik.recruitmenttask.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import michal.ulik.recruitmenttask.exceptions.RateNotFoundException;
 import michal.ulik.recruitmenttask.model.dtos.RateDto;
-import michal.ulik.recruitmenttask.model.dtos.ResultDto;
-import michal.ulik.recruitmenttask.model.enities.Rate;
-import michal.ulik.recruitmenttask.model.mappers.RateMapper;
-import michal.ulik.recruitmenttask.model.repositories.RateRepository;
+import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,21 +12,19 @@ import java.util.List;
 @Service
 @Slf4j
 public class RateService {
-    private final RateRepository rateRepository;
-    private final RateMapper rateMapper;
+    private final NbpService nbpService;
 
     public List<RateDto> getAllRates(){
-        List<Rate> rates = rateRepository.findAll();
-        return rateMapper.ratesToRatesDto(rates);
+        return nbpService.getNbpTableDtoTemplate().getRates();
     }
 
-    public RateDto getRate(Long id){
-        Rate rate = rateRepository.findById(id).orElseThrow(() -> {
-            String message = "Rate not found " + id;
-            log.error(message);
-            return new RateNotFoundException(message);
-        });
-        return rateMapper.rateToRateDto(rate);
+    public RateDto getRate(String code){
+        NbpRateDto nbpRateDto = nbpService.getRateDtoTemplate(code);
+        return RateDto.builder()
+                .currency(nbpRateDto.getCurrency())
+                .code(nbpRateDto.getCode())
+                .mid(nbpRateDto.getRates().get(0).getMid())
+                .build();
     }
 
 }
