@@ -1,7 +1,6 @@
 package michal.ulik.recruitmenttask.utils;
 
 import michal.ulik.recruitmenttask.exceptions.ExternalApiCallException;
-import michal.ulik.recruitmenttask.model.enums.ExceptionMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
