@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import michal.ulik.recruitmenttask.model.dtos.ResultDto;
 import michal.ulik.recruitmenttask.services.LogService;
 import michal.ulik.recruitmenttask.services.ResultService;
+import michal.ulik.recruitmenttask.utils.RestTemplateErrorHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/convert")
-public class ResultController {
+public class ResultController{
     private final LogService logService;
     private final ResultService resultService;
 
