@@ -1,8 +1,6 @@
 package michal.ulik.recruitmenttask.services;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import michal.ulik.recruitmenttask.model.LogRepository;
 import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
 import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
 import org.springframework.stereotype.Service;
