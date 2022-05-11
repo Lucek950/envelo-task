@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  database:
+    container_name: postgres_currency
+    image: 'postgres'
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=log-db
+      - POSTGRES_PORT=5432
+    restart: always
+  currency_app:
+    image: 'michalulik/log-db'
+#    build:
+#      context: .
+    ports:
+      - "8181:8181"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/log-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    restart: always
+    depends_on:
+      - database
