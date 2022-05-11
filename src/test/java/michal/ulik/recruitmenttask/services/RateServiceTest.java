@@ -4,19 +4,18 @@ import michal.ulik.recruitmenttask.TestData;
 import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
 import michal.ulik.recruitmenttask.model.dtos.RateDto;
 import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
-import michal.ulik.recruitmenttask.model.dtos.nbpRate.ValueNbpRateDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
 class RateServiceTest {

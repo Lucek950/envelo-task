@@ -1,7 +1,6 @@
 package michal.ulik.recruitmenttask.services;
 
 import michal.ulik.recruitmenttask.TestData;
-import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
 import michal.ulik.recruitmenttask.model.dtos.RateDto;
 import michal.ulik.recruitmenttask.model.dtos.ResultDto;
 import org.junit.jupiter.api.Test;
@@ -14,9 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -59,5 +56,25 @@ class ResultServiceTest {
         assertThat(actual.getTo()).isEqualTo(expected.getTo());
         assertThat(actual.getAmount()).isEqualTo(expected.getAmount());
         assertThat(actual.getValue()).isEqualTo(expected.getValue());
+    }
+
+    @Test
+    void convertCurrencies() {
+        //given
+        RateDto rateDtoFrom = TestData.getFirstRateDto();
+        RateDto rateDtoFirst = TestData.getSecondRateDto();
+        RateDto rateDtoSecond = TestData.getThirdRateDto();
+
+        List<RateDto> ratesDto = List.of(rateDtoFrom, rateDtoFirst, rateDtoSecond);
+
+        given(rateService.getRate(any())).willReturn(rateDtoFrom, rateDtoFirst);
+        given(rateService.getAllRates()).willReturn(ratesDto);
+
+        //when
+        resultService.convertCurrencies("usd");
+
+        //then
+        then(rateService).should(times(ratesDto.size() + 1)).getRate(any());
+        then(rateService).should().getAllRates();
     }
 }

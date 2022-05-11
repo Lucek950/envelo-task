@@ -1,6 +1,5 @@
 package michal.ulik.recruitmenttask;
 
-import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
 import michal.ulik.recruitmenttask.model.dtos.RateDto;
 import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
 import michal.ulik.recruitmenttask.model.dtos.nbpRate.ValueNbpRateDto;
@@ -22,6 +21,14 @@ public class TestData {
                 .code("eur")
                 .currency("euro")
                 .mid(new BigDecimal("4.6700"))
+                .build();
+    }
+
+    public static RateDto getThirdRateDto(){
+        return  RateDto.builder()
+                .code("huf")
+                .currency("forint (Węgry)")
+                .mid(new BigDecimal("0.012307"))
                 .build();
     }
 
