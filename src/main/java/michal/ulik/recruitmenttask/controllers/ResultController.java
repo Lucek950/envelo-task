@@ -5,13 +5,12 @@ import michal.ulik.recruitmenttask.model.dtos.ResultDto;
 import michal.ulik.recruitmenttask.services.LogService;
 import michal.ulik.recruitmenttask.services.ResultService;
 import michal.ulik.recruitmenttask.utils.RestTemplateErrorHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,8 +21,8 @@ public class ResultController{
 
     @GetMapping("/{fromCode}/to/{codeTo}/{amount}")
     public ResultDto getConvertCurrency(@PathVariable("fromCode") String fromCode
-            ,@PathVariable("codeTo") String toCode
-            ,@PathVariable("amount") BigDecimal amount){
+            , @PathVariable("codeTo") String toCode
+            , @PathVariable("amount") BigDecimal amount){
         logService.setLog("getConvertCurrency(String formCode, String toCode, BigDecimal amount)",
                 fromCode, toCode, amount);
         return resultService.convertCurrency(fromCode, toCode, amount);
