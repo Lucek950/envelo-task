@@ -1,25 +1,55 @@
 version: '3.8'
 services:
-  database:
-    container_name: postgres_currency
-    image: 'postgres'
-    environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=log-db
-      - POSTGRES_PORT=5432
+  db:
+    container_name: pg_container
+    image: postgres
     restart: always
-  currency_app:
-    image: 'michalulik/log-db'
-#    build:
-#      context: .
-    ports:
-      - "8181:8181"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/log-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: log-db
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres -d log-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - 5050:80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+  api_backend:
+    container_name: exchange_rates_backend
+    image: exchange_rates_backend
+    build:
+      context: .
+    ports:
+      - 8082:8082
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # APPLICATION PROPERTIES
+      - SERVER_PORT=8082
+      # DATABASE
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=admin
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    restart: always
-    depends_on:
-      - database
+      # POSTGRESQL
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/log-db
+      # JPA
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+volumes:
+  postgres:
+  pgadmin:
