@@ -1,5 +1,5 @@
 Steps to run the application:
-1. Build jar file: "./mvnw clean package -DskipTests"
+1. Build jar file: "./mvnw clean package -D skipTests"
 2. Run the application: "docker-compose up"
 
 Link to swagger:
