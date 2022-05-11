@@ -12,5 +12,6 @@ import java.math.BigDecimal;
 public class ResultDto {
     private String from;
     private String to;
+    private BigDecimal amount;
     private BigDecimal value;
 }

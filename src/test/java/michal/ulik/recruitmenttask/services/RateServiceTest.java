@@ -1,7 +1,10 @@
 package michal.ulik.recruitmenttask.services;
 
+import michal.ulik.recruitmenttask.TestData;
 import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
 import michal.ulik.recruitmenttask.model.dtos.RateDto;
+import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
+import michal.ulik.recruitmenttask.model.dtos.nbpRate.ValueNbpRateDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,22 +30,36 @@ class RateServiceTest {
     @Test
     void getAllRates_shouldReturnListRateDto_and_checkIsNotNull_and_compereSize() {
         //given
-        RateDto rateDtoFirst = RateDto.builder().code("usd").currency("dolar amerykański").mid(BigDecimal.TEN).build();
-        RateDto rateDtoSecond = RateDto.builder().code("eur").currency("euro").mid(BigDecimal.TEN).build();
+        RateDto rateDtoFirst = TestData.getFirstRateDto();
+        RateDto rateDtoSecond = TestData.getSecondRateDto();
 
         List<RateDto> ratesDto = List.of(rateDtoFirst, rateDtoSecond);
 
-        willDoNothing().given(logService).setLog(any());
         given(nbpService.getNbpTableDtoTemplate()).willReturn(new NbpTableDto(ratesDto));
 
         //when
         List<RateDto> actual = rateService.getAllRates();
 
         //then
-        then(logService).should().setLog(any());
         then(nbpService).should().getNbpTableDtoTemplate();
 
         assertThat(actual).isNotNull();
         assertThat(actual).size().isEqualTo(ratesDto.size());
+    }
+
+    @Test
+    void getRate_shouldReturnRateDto_and_checkIsNotNull() {
+        //given
+        NbpRateDto nbpRateDto = TestData.getFirstNbpTableDto();
+
+        given(nbpService.getRateDtoTemplate(any())).willReturn(nbpRateDto);
+
+        //when
+        RateDto actual = rateService.getRate(nbpRateDto.getCode());
+
+        //then
+        then(nbpService).should().getRateDtoTemplate(any());
+
+        assertThat(actual).isNotNull();
     }
 }
