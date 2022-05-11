@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import michal.ulik.recruitmenttask.model.dtos.ResultDto;
 import michal.ulik.recruitmenttask.services.LogService;
 import michal.ulik.recruitmenttask.services.ResultService;
-import michal.ulik.recruitmenttask.utils.RestTemplateErrorHandler;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController

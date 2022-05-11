@@ -2,8 +2,8 @@ package michal.ulik.recruitmenttask.services;
 
 import lombok.RequiredArgsConstructor;
 import michal.ulik.recruitmenttask.exceptions.ExternalApiCallException;
-import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
 import michal.ulik.recruitmenttask.model.dtos.NbpTableDto;
+import michal.ulik.recruitmenttask.model.dtos.nbpRate.NbpRateDto;
 import michal.ulik.recruitmenttask.model.enums.ExceptionMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -35,7 +35,7 @@ public class NbpService{
             String url = "http://api.nbp.pl/api/exchangerates/rates/A/" + code;
             return restTemplate.getForObject(url, NbpRateDto.class);
         } catch (ExternalApiCallException ex){
-            String message = ExceptionMessage.EXTERNAL_API_NOT_FOUND.getMessage() + code;
+            String message = ExceptionMessage.NBP_RATE_CODE_NOT_FOUND.getMessage() + code;
             logService.setLog("ERROR: " + message);
             throw new ExternalApiCallException(message);
         }
