@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    container_name: pg_container
+    container_name: postgres_recruitment
     image: postgres
     restart: always
     environment:
@@ -19,9 +19,9 @@ services:
       retries: 3
     volumes:
       - postgres:/var/lib/postgresql/data
-  api_backend:
-    container_name: exchange_rates_backend
-    image: exchange_rates_backend
+  app:
+    container_name: recruitment-task
+    image: recruitment-task
     build:
       context: .
     ports:
